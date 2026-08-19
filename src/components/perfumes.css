@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+.perfumes-section {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.perfumes-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.perfumes-tagline {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3.5px;
+  color: #997e5d;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.perfumes-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 38px;
+  font-weight: 400;
+  color: #1a1a1a;
+  margin: 0;
+  letter-spacing: 3px;
+}
+
+.perfumes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.perfume-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.35s ease;
+}
+
+
+
+.perfume-img-frame {
+  position: relative;
+  width: 100%;
+  height: 290px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03);
+}
+
+.perfume-img {
+  max-width: 85%;
+  max-height: 85%;
+  object-fit: contain;
+  transition: transform 0.5s ease;
+}
+
+
+.perfume-info {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.perfume-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin: 0 0 4px 0;
+  letter-spacing: 0.2px;
+}
+
+.perfume-sub {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: #8c7355;
+  margin: 0 0 6px 0;
+}
+
+.perfume-price {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+/* BUTTON ACTIONS (ADD TO CART & BUY NOW) */
+.perfume-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+  width: 100%;
+  max-width: 280px;
+}
+
+.btn-add-cart {
+  background-color: black;
+  color: #ffffff;
+  border: 1px solid #1a1a1a;
+  padding: 9px 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+@media (max-width: 900px) {
+  .perfumes-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .perfumes-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .perfume-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

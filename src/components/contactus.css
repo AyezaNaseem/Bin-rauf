@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+.contact-page {
+  width: 100%;
+  background-color: #faf7f2;
+  color: #1a1a1a;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.contact-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 5% 100px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 70px;
+  align-items: flex-start;
+}
+
+/* =========================================
+   1. LEFT COLUMN: FORM
+   ========================================= */
+.contact-form-col {
+  width: 100%;
+}
+
+.contact-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 40px;
+  line-height: 1.15;
+  font-weight: 400;
+  color: #1a1a1a;
+  margin: 0 0 20px 0;
+  letter-spacing: 2.5px;
+}
+
+.contact-subtitle {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: #666666;
+  font-weight: 300;
+  max-width: 490px;
+  margin-bottom: 40px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  max-width: 500px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  color: #8c7355;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  color: #1a1a1a;
+  background-color: #ffffff;
+  border: 1px solid #e6dfd5;
+  border-radius: 2px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #1a1a1a;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.03);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #aaaaaa;
+  font-weight: 300;
+  font-size: 12px;
+}
+
+.contact-submit-btn {
+  align-self: flex-start;
+  background-color: #241c18;
+  color: #ffffff;
+  border: none;
+  padding: 14px 34px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.contact-submit-btn:hover {
+  background-color: #3b3028;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.contact-success-msg {
+  background-color: #f4efe6;
+  border: 1px solid #e0d5c5;
+  padding: 30px;
+  border-radius: 2px;
+  text-align: center;
+  max-width: 500px;
+}
+
+.contact-success-msg h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: #1a1a1a;
+  margin: 0 0 10px 0;
+}
+
+.contact-success-msg p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  color: #555555;
+  margin: 0;
+}
+
+/* =========================================
+   2. RIGHT COLUMN: INFO CARD & MAP
+   ========================================= */
+.contact-info-col {
+  width: 100%;
+}
+
+.info-card {
+  background-color: #f4efe6;
+  border: 1px solid #ebe2d5;
+  padding: 45px 40px;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.03);
+}
+
+.info-watermark {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-family: 'Cinzel', 'Playfair Display', serif;
+  font-size: 38px;
+  font-weight: 700;
+  color: rgba(153, 126, 93, 0.09);
+  letter-spacing: 5px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.info-block {
+  margin-bottom: 28px;
+}
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.info-icon {
+  width: 18px;
+  height: 18px;
+  color: #8c7355;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.info-block h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin: 0 0 10px 0;
+  letter-spacing: 2.5px;
+}
+
+.info-block p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: #555555;
+  font-weight: 300;
+  margin: 0 0 4px 0;
+}
+
+.info-block p a {
+  color: #555555;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.info-block p a:hover {
+  color: #8c7355;
+}
+
+.map-container {
+  margin-top: 24px;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 2px;
+  border: 1px solid #e0d5c5;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.04);
+}
+
+/* =========================================
+   RESPONSIVE STYLES
+   ========================================= */
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .contact-title {
+    font-size: 38px;
+  }
+
+  .contact-form {
+    max-width: 100%;
+  }
+
+  .info-card {
+    padding: 30px 25px;
+  }
+}
