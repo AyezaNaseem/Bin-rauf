@@ -2,9 +2,9 @@ import React from 'react';
 import './giftboxes.css';
 
 import giftbox1 from '../assets/giftbox1.jpeg';
-import giftbox2 from '../assets/giftbox2.jpeg';
 
-const Giftboxes = ({ onAddToCart }) => {
+
+const Giftboxes = ({ onAddToCart, onViewItem }) => {
   const giftboxProducts = [
     {
       id: 'giftbox-1',
@@ -13,14 +13,6 @@ const Giftboxes = ({ onAddToCart }) => {
       price: 'Rs. 250 PKR',
       image: giftbox1,
       bg: '#f7f4ee'
-    },
-    {
-      id: 'giftbox-2',
-      name: 'The Midnight Noir Edition',
-      sub: 'Exclusive Black Velvet Attar Gift Set',
-      price: 'Rs. 250 PKR',
-      image: giftbox2,
-      bg: '#ede8e1'
     }
   ];
 
@@ -50,9 +42,9 @@ const Giftboxes = ({ onAddToCart }) => {
                 <button
                   type="button"
                   className="btn-add-cart"
-                  onClick={() => onAddToCart && onAddToCart(item)}
+                  onClick={() => onViewItem ? onViewItem(item) : (onAddToCart && onAddToCart(item))}
                 >
-                  ADD TO CART
+                  VIEW ITEM
                 </button>
               </div>
             </div>

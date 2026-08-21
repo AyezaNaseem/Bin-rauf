@@ -3,7 +3,7 @@ import './perfumes.css';
 import perfume1 from '../assets/perfume1.jpeg';
 import perfume2 from '../assets/perfume2.jpeg';
 
-const Perfumes = ({ onAddToCart }) => {
+const Perfumes = ({ onAddToCart, onViewItem }) => {
   const perfumeProducts = [
     {
       id: 'perfume-1',
@@ -49,9 +49,9 @@ const Perfumes = ({ onAddToCart }) => {
                 <button
                   type="button"
                   className="btn-add-cart"
-                  onClick={() => onAddToCart && onAddToCart(item)}
+                  onClick={() => onViewItem ? onViewItem(item) : (onAddToCart && onAddToCart(item))}
                 >
-                  ADD TO CART
+                  VIEW ITEM
                 </button>
               </div>
             </div>

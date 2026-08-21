@@ -246,6 +246,12 @@
    RESPONSIVE STYLES
    ========================================= */
 @media (max-width: 900px) {
+  .about-story-section,
+  .about-process-section,
+  .about-loom-section {
+    padding: 50px 0;
+  }
+
   .about-hero-title {
     font-size: 42px;
   }
@@ -254,30 +260,76 @@
   .story-grid.reverse,
   .story-grid.image-left,
   .story-grid.text-left {
-    grid-template-columns: 1fr;
-    gap: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
   }
 
+  .story-text-card {
+    order: 1;
+    width: 100%;
+  }
+
+  .story-tagline {
+    font-size: 9.5px;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+  }
+
+  .story-title {
+    font-size: 32px;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .story-desc {
+    font-size: 12.5px;
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .story-image-card,
+  .loom-card-wrapper {
+    order: 2;
+    width: 100%;
+  }
+
+  .story-grid.image-left .img-frame,
   .img-frame {
-    height: 340px;
+    height: 300px;
+    max-width: 100%;
   }
 
   .loom-img-frame {
     max-width: 100%;
+    padding: 12px;
+  }
+
+  .loom-img {
+    height: 220px;
   }
 }
 
 @media (max-width: 600px) {
   .about-hero-section {
-    height: 65vh;
-    min-height: 440px;
+    height: 55vh;
+    min-height: 380px;
   }
 
   .about-hero-title {
-    font-size: 34px;
+    font-size: 32px;
   }
 
   .about-hero-subtitle {
-    font-size: 12px;
+    font-size: 11.5px;
+  }
+
+  .story-title {
+    font-size: 28px;
+  }
+
+  .story-grid.image-left .img-frame,
+  .img-frame {
+    height: 260px;
   }
 }

@@ -6,8 +6,9 @@ import historyImage from '../assets/history.png';
 import img1 from '../assets/img1.png';
 import img2 from '../assets/img2.png';
 import img3 from '../assets/img3.jpg';
+import img4 from '../assets/img4.jpeg';
 
-const Hero = () => {
+const Hero = ({ onNavigate }) => {
   const products = [
     {
       id: 1,
@@ -30,6 +31,13 @@ const Hero = () => {
       quote: '"Timeless Islamic essentials designed with devotion, honor, and artisanal mastery."',
       image: img3,
       bg: '#dad0c0'
+    },
+    {
+      id: 4,
+      title: 'PURE ESSENTIAL OILS',
+      quote: '"Nourishing organic botanical elixirs and restorative essential oils for natural wellness."',
+      image: img4,
+      bg: '#e5dbcc'
     }
   ];
 
@@ -50,7 +58,12 @@ const Hero = () => {
             Discover the quiet luxury of bespoke fragrances, crafted with
             time-honored traditions and the world's most exquisite raw materials.
           </p>
-          <button className="hero-btn">SHOP COLLECTION</button>
+          <button
+            className="hero-btn"
+            onClick={() => onNavigate && onNavigate('shop', 'best-sellers')}
+          >
+            SHOP COLLECTION
+          </button>
         </div>
       </section>
 

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import './attar.css';
 
 import attar1 from '../assets/attar1.jpeg';
@@ -24,7 +24,7 @@ import attar20 from '../assets/attar20.jpeg';
 import attar21 from '../assets/attar21.jpeg';
 import attar22 from '../assets/attar22.jpeg';
 
-const Attar = ({ onAddToCart }) => {
+const Attar = ({ onAddToCart, onViewItem }) => {
   const attarProducts = [
     {
       id: 'attar-1',
@@ -230,9 +230,9 @@ const Attar = ({ onAddToCart }) => {
                 <button
                   type="button"
                   className="btn-add-cart"
-                  onClick={() => onAddToCart && onAddToCart(item)}
+                  onClick={() => onViewItem ? onViewItem(item) : (onAddToCart && onAddToCart(item))}
                 >
-                  ADD TO CART
+                  VIEW ITEM
                 </button>
               </div>
             </div>

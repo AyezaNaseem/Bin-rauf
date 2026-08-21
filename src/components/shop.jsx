@@ -1,40 +1,40 @@
-import React from 'react';
+
 import './shop.css';
 import Footer from './footer';
 import Perfumes from './perfumes';
 import Attar from './attar';
-import Giftboxes from './giftboxes';
 import Cap from './cap';
 import OilSerum from './oil&serum';
+import BestSellers from './bestsellers';
 
-const Shop = ({ category = 'all', onAddToCart }) => {
+const Shop = ({ category = 'all', onAddToCart, onViewItem }) => {
   return (
     <div className="shop-page">
       <div className="shop-container">
-        {category === 'perfumes' ? (
-          <Perfumes onAddToCart={onAddToCart} />
+        {category === 'best-sellers' || category === 'bestsellers' || category === 'best' ? (
+          <BestSellers onAddToCart={onAddToCart} onViewItem={onViewItem} />
+        ) : category === 'perfumes' ? (
+          <Perfumes onAddToCart={onAddToCart} onViewItem={onViewItem} />
         ) : category === 'ittar' || category === 'attar' ? (
-          <Attar onAddToCart={onAddToCart} />
-        ) : category === 'giftboxes' || category === 'attar-giftboxes' ? (
-          <Giftboxes onAddToCart={onAddToCart} />
+          <Attar onAddToCart={onAddToCart} onViewItem={onViewItem} />
         ) : category === 'namaz-caps' || category === 'caps' ? (
-          <Cap onAddToCart={onAddToCart} />
+          <Cap onAddToCart={onAddToCart} onViewItem={onViewItem} />
         ) : category === 'oil-serum' || category === 'oil&serum' || category === 'oil' || category === 'serum' ? (
-          <OilSerum onAddToCart={onAddToCart} />
+          <OilSerum onAddToCart={onAddToCart} onViewItem={onViewItem} />
         ) : (
           <div className="shop-category-view">
-            <Perfumes onAddToCart={onAddToCart} />
+            <BestSellers onAddToCart={onAddToCart} onViewItem={onViewItem} />
             <div style={{ marginTop: '60px' }}>
-              <Attar onAddToCart={onAddToCart} />
+              <Perfumes onAddToCart={onAddToCart} onViewItem={onViewItem} />
             </div>
             <div style={{ marginTop: '60px' }}>
-              <Giftboxes onAddToCart={onAddToCart} />
+              <Attar onAddToCart={onAddToCart} onViewItem={onViewItem} />
             </div>
             <div style={{ marginTop: '60px' }}>
-              <Cap onAddToCart={onAddToCart} />
+              <Cap onAddToCart={onAddToCart} onViewItem={onViewItem} />
             </div>
             <div style={{ marginTop: '60px' }}>
-              <OilSerum onAddToCart={onAddToCart} />
+              <OilSerum onAddToCart={onAddToCart} onViewItem={onViewItem} />
             </div>
           </div>
         )}

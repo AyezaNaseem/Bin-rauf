@@ -15,6 +15,24 @@
   z-index: 1000;
 }
 
+/* Hamburger Button (Hidden on Desktop) */
+.hamburger-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+  color: #111111;
+  padding: 6px;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.hamburger-btn:hover {
+  color: #8c7355;
+}
+
 /* Left Section Links */
 .nav-links {
   display: flex;
@@ -160,10 +178,10 @@
 }
 
 .brand-logo-img {
-  height: 95px;
+  height: 85px;
   width: auto;
   object-fit: contain;
-  margin-right: -10px;
+  margin-right: -8px;
   mix-blend-mode: multiply;
 }
 
@@ -180,7 +198,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 17px;
+  font-size: 18px;
   color: #222222;
   display: flex;
   align-items: center;
@@ -213,4 +231,225 @@
   align-items: center;
   justify-content: center;
   border: 1px solid #ffffff;
+}
+
+/* =========================================
+   MOBILE DRAWER MENU OVERLAY STYLES
+   ========================================= */
+.mobile-drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: flex;
+  animation: fadeInModal 0.2s ease-out;
+}
+
+.mobile-drawer-container {
+  width: 290px;
+  max-width: 85vw;
+  height: 100%;
+  background-color: #fdfcfa;
+  box-shadow: 4px 0 25px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  animation: slideDrawerRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideDrawerRight {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.mobile-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #efe8de;
+}
+
+.drawer-logo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #111;
+  letter-spacing: 2px;
+}
+
+.drawer-logo-img {
+  height: 45px;
+  width: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.mobile-drawer-close-btn {
+  background: #f0eae1;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobile-drawer-close-btn:hover {
+  background: #111;
+  color: #fff;
+}
+
+.mobile-drawer-links {
+  list-style: none;
+  padding: 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.drawer-link-btn {
+  background: none;
+  border: none;
+  text-align: left;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #333;
+  cursor: pointer;
+  padding: 8px 0;
+  width: 100%;
+  transition: color 0.2s ease;
+}
+
+.drawer-link-btn:hover,
+.drawer-link-btn.active {
+  color: #8c7355;
+}
+
+/* Mobile Shop Accordion */
+.mobile-shop-accordion {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-shop-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.accordion-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #555;
+  padding: 6px;
+  transition: transform 0.25s ease;
+}
+
+.accordion-toggle-btn.open {
+  transform: rotate(180deg);
+  color: #8c7355;
+}
+
+.mobile-subcategories-list {
+  list-style: none;
+  padding: 6px 0 6px 14px;
+  margin: 4px 0 8px 0;
+  border-left: 2px solid #8c7355;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobile-subcategories-list li button {
+  background: none;
+  border: none;
+  text-align: left;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  color: #555;
+  cursor: pointer;
+  padding: 4px 0;
+  width: 100%;
+  transition: color 0.2s ease;
+}
+
+.mobile-subcategories-list li button:hover {
+  color: #8c7355;
+  font-weight: 600;
+}
+
+.mobile-drawer-footer {
+  padding: 20px;
+  border-top: 1px solid #efe8de;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: #888;
+  text-align: center;
+}
+
+/* =========================================
+   MEDIA QUERIES FOR NAVBAR RESPONSIVENESS
+   ========================================= */
+@media (max-width: 900px) {
+  .binrauf-navbar {
+    padding: 0 16px;
+  }
+
+  .hamburger-btn {
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-logo {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .nav-logo a {
+    font-size: 15px;
+    letter-spacing: 2.5px;
+  }
+
+  .brand-logo-img {
+    height: 55px;
+    margin-right: -4px;
+  }
+
+  .nav-icons {
+    flex: 1;
+    justify-content: flex-end;
+    gap: 14px;
+  }
+
+  .icon-btn {
+    font-size: 18px;
+  }
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiCheckCircle, FiLock } from 'react-icons/fi';
+import emailjs from '@emailjs/browser';
 import Footer from './footer';
 import './cart.css';
 
@@ -15,10 +16,10 @@ export const formatPrice = (num) => {
 };
 
 const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem, onClearCart, onNavigate }) => {
-  const [giftWrap, setGiftWrap] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('cod');
   const [transactionId, setTransactionId] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const [formData, setFormData] = useState({
     emailOrPhone: '',
     firstName: '',
@@ -35,12 +36,26 @@ const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem, onClearCart, onN
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const hasOilSerum = cartItems.some(
+    (item) =>
+      item.category === 'oil-serum' ||
+      (item.id && (item.id.toString().startsWith('serum') || item.id.toString().startsWith('oil'))) ||
+      (item.name && (item.name.toLowerCase().includes('serum') || item.name.toLowerCase().includes('oil')))
+  );
+
   const subtotal = cartItems.reduce(
     (sum, item) => sum + parsePrice(item.price) * (item.quantity || 1),
     0
   );
-  const deliveryCharges = subtotal > 0 ? 300 : 0;
-  const total = subtotal + deliveryCharges;
+
+  // Delivery Charges: Free for Oil & Serum items, else Rs. 300 PKR
+  const deliveryCharges = hasOilSerum ? 0 : (subtotal > 0 ? 300 : 0);
+
+  // 10% Discount for shopping over Rs. 10,000
+  const isDiscountEligible = subtotal >= 10000;
+  const discountAmount = isDiscountEligible ? Math.round(subtotal * 0.10) : 0;
+
+  const total = subtotal - discountAmount + deliveryCharges;
 
   const handleSubmitOrder = (e) => {
     e.preventDefault();
@@ -48,7 +63,45 @@ const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem, onClearCart, onN
       alert("Your cart is empty!");
       return;
     }
-    setIsSubmitted(true);
+
+    setIsSending(true);
+
+    // Prepare Items List String for Email
+    const itemsSummary = cartItems
+      .map((item) => `${item.name} x${item.quantity || 1} - ${formatPrice(parsePrice(item.price) * (item.quantity || 1))}`)
+      .join('\n');
+
+    // EmailJS Template Dynamic Parameters
+    const templateParams = {
+      to_email: 'binraufofficials@gmail.com', // Official Target Email
+      user_name: `${formData.firstName} ${formData.lastName}`,
+      user_phone: formData.phone,
+      user_email: formData.emailOrPhone,
+      user_address: `${formData.address}${formData.apartment ? ', ' + formData.apartment : ''}`,
+      user_city: formData.city,
+      order_items: itemsSummary,
+      delivery_charges: hasOilSerum ? 'FREE (Oil & Serum Offer)' : '300 PKR',
+      discount_amount: isDiscountEligible ? formatPrice(discountAmount) : 'None',
+      total_amount: formatPrice(total),
+      payment_method: paymentMethod.toUpperCase() + (transactionId ? ` (TID: ${transactionId})` : '')
+    };
+
+    // Send Email via EmailJS
+    emailjs.send(
+      'service_1jidq0e',      // Yahan apni new Service ID lagayein
+      'template_avrvgar',     // Yahan apni Template ID lagayein
+      templateParams,
+      'F2GRIU4Hdesj55YbI'       // Yahan apni Public Key lagayein
+    )
+    .then(() => {
+      setIsSending(false);
+      setIsSubmitted(true);
+    })
+    .catch((err) => {
+      console.error('EmailJS Error:', err);
+      setIsSending(false);
+      alert('Order place karne me masla aaya hai. Kripya dubara koshish karein.');
+    });
   };
 
   if (isSubmitted) {
@@ -64,10 +117,14 @@ const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem, onClearCart, onN
             <p><strong>Customer Name:</strong> {formData.firstName} {formData.lastName}</p>
             <p><strong>Phone:</strong> {formData.phone}</p>
             <p><strong>Delivery Address:</strong> {formData.address}, {formData.city}</p>
+            <p><strong>Subtotal:</strong> {formatPrice(subtotal)}</p>
+            {isDiscountEligible && (
+              <p style={{ color: '#2e7d32' }}><strong>10% Discount:</strong> -{formatPrice(discountAmount)}</p>
+            )}
+            <p><strong>Delivery Charges:</strong> {hasOilSerum ? 'FREE (Oil & Serum Offer)' : 'Rs. 300 PKR'}</p>
             <p><strong>Total Amount:</strong> {formatPrice(total)}</p>
             <p><strong>Payment Method:</strong> {paymentMethod.toUpperCase()}</p>
             {transactionId && <p><strong>Transaction ID:</strong> {transactionId}</p>}
-            <p><strong>Delivery Charges:</strong> Rs. 300 PKR</p>
           </div>
           <button
             type="button"
@@ -162,20 +219,23 @@ const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem, onClearCart, onN
                 })}
               </div>
 
-              {/* Gift Wrapping Checkbox */}
-              <div className="gift-wrap-option">
-                <label className="checkbox-container">
-                  <input
-                    type="checkbox"
-                    checked={giftWrap}
-                    onChange={(e) => setGiftWrap(e.target.checked)}
-                  />
-                  <span className="checkmark"></span>
-                  <span className="gift-wrap-text">
-                    Complimentary Signature Gift Wrapping
-                    <small>Your order will be presented in our signature box tied with a dark ribbon.</small>
-                  </span>
-                </label>
+              {/* Promos & Offer Banners */}
+              <div className="cart-promos-container">
+                {hasOilSerum && (
+                  <div className="promo-badge free-delivery-promo">
+                    🚚 <strong>Free Delivery Applied</strong> (Oil & Serum Offer)
+                  </div>
+                )}
+
+                {isDiscountEligible ? (
+                  <div className="promo-badge discount-promo">
+                    🎉 <strong>10% Discount Applied!</strong> (Orders over Rs. 10,000)
+                  </div>
+                ) : (
+                  <div className="promo-badge hint-promo">
+                    💡 Spend <strong>{formatPrice(10000 - subtotal)}</strong> more to unlock <strong>10% OFF</strong>!
+                  </div>
+                )}
               </div>
 
               {/* Pricing Breakdown */}
@@ -184,10 +244,25 @@ const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem, onClearCart, onN
                   <span>Subtotal</span>
                   <span>{formatPrice(subtotal)}</span>
                 </div>
+
+                {isDiscountEligible && (
+                  <div className="pricing-row discount-row">
+                    <span>10% Special Discount</span>
+                    <span className="discount-text">-{formatPrice(discountAmount)}</span>
+                  </div>
+                )}
+
                 <div className="pricing-row">
                   <span>Delivery Charges</span>
-                  <span>{formatPrice(deliveryCharges)}</span>
+                  <span>
+                    {hasOilSerum ? (
+                      <span className="free-delivery-text">FREE</span>
+                    ) : (
+                      formatPrice(deliveryCharges)
+                    )}
+                  </span>
                 </div>
+
                 <div className="pricing-row total-row">
                   <span>Total</span>
                   <span>{formatPrice(total)}</span>
@@ -388,8 +463,8 @@ const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem, onClearCart, onN
                 </div>
 
                 {/* Submit Button */}
-                <button type="submit" className="btn-complete-order">
-                  COMPLETE ORDER ({formatPrice(total)})
+                <button type="submit" className="btn-complete-order" disabled={isSending}>
+                  {isSending ? 'PROCESSING ORDER...' : `COMPLETE ORDER (${formatPrice(total)})`}
                 </button>
 
                 <p className="secure-checkout-tag">

@@ -123,20 +123,59 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   padding-top: 30px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 10px;
   letter-spacing: 1.5px;
   color: #666666;
+  width: 100%;
+}
+
+.footer-bottom p {
+  text-align: center;
+  margin: 0;
+  width: 100%;
 }
 
 /* Footer Responsive Styles */
 @media (max-width: 768px) {
+  .binrauf-footer {
+    padding: 40px 16px 30px;
+  }
+
   .footer-content {
     grid-template-columns: 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
   }
 
   .footer-links-group {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .footer-col h4 {
+    font-size: 9px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+
+  .footer-col ul li {
+    margin-bottom: 8px;
+  }
+
+  .footer-col ul li a {
+    font-size: 10px;
+  }
+
+  .footer-bottom {
+    text-align: center;
+    justify-content: center;
+    padding-top: 20px;
+  }
+
+  .footer-bottom p {
+    text-align: center;
   }
 }

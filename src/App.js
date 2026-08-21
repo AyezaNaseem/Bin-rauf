@@ -5,12 +5,16 @@ import About from "./components/about";
 import ContactUs from "./components/contactus";
 import Shop from "./components/shop";
 import Cart from "./components/cart";
+import ItemModal from "./components/itemModal";
+import SearchModal from "./components/searchModal";
 import "./App.css";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home");
   const [shopCategory, setShopCategory] = useState("all");
   const [cartItems, setCartItems] = useState([]);
+  const [activeModalItem, setActiveModalItem] = useState(null);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const handleNavigate = (page, category = "all") => {
     setCurrentPage(page);
@@ -19,7 +23,11 @@ function App() {
     }
   };
 
-  const handleAddToCart = (product) => {
+  const handleViewItem = (product) => {
+    setActiveModalItem(product);
+  };
+
+  const handleAddToCart = (product, quantity = 1, openCartPage = false) => {
     setCartItems((prevItems) => {
       const pId = product.id || product.name;
       const existingIndex = prevItems.findIndex((item) => (item.id || item.name) === pId);
@@ -27,15 +35,25 @@ function App() {
         const updated = [...prevItems];
         updated[existingIndex] = {
           ...updated[existingIndex],
-          quantity: (updated[existingIndex].quantity || 1) + 1
+          quantity: (updated[existingIndex].quantity || 1) + quantity
         };
         return updated;
       } else {
-        return [...prevItems, { ...product, quantity: 1 }];
+        return [...prevItems, { ...product, quantity }];
       }
     });
-    // Open Cart page when an item is added
-    setCurrentPage("cart");
+
+    // Close item popup window
+    setActiveModalItem(null);
+
+    // If requested (e.g. Checkout button), open Cart page
+    if (openCartPage) {
+      setCurrentPage("cart");
+    }
+  };
+
+  const handleModalCheckout = (product, quantity = 1) => {
+    handleAddToCart(product, quantity, true);
   };
 
   const handleUpdateQuantity = (productId, delta) => {
@@ -73,6 +91,7 @@ function App() {
         activePage={currentPage}
         cartCount={cartCount}
         onNavigate={handleNavigate}
+        onOpenSearch={() => setIsSearchOpen(true)}
       />
       {currentPage === "cart" ? (
         <Cart
@@ -83,13 +102,38 @@ function App() {
           onNavigate={handleNavigate}
         />
       ) : currentPage === "shop" ? (
-        <Shop category={shopCategory} onAddToCart={handleAddToCart} />
+        <Shop
+          category={shopCategory}
+          onAddToCart={(product) => handleAddToCart(product, 1, false)}
+          onViewItem={handleViewItem}
+        />
       ) : currentPage === "contact" ? (
         <ContactUs />
       ) : currentPage === "about" ? (
         <About />
       ) : (
-        <Hero />
+        <Hero onNavigate={handleNavigate} />
+      )}
+
+      {/* SEARCH OVERLAY MODAL */}
+      {isSearchOpen && (
+        <SearchModal
+          onClose={() => setIsSearchOpen(false)}
+          onViewItem={(product) => {
+            setIsSearchOpen(false);
+            handleViewItem(product);
+          }}
+        />
+      )}
+
+      {/* VIEW ITEM POPUP MODAL */}
+      {activeModalItem && (
+        <ItemModal
+          item={activeModalItem}
+          onClose={() => setActiveModalItem(null)}
+          onAddToCart={(product, qty) => handleAddToCart(product, qty, false)}
+          onCheckout={(product, qty) => handleModalCheckout(product, qty)}
+        />
       )}
     </div>
   );
