@@ -145,17 +145,7 @@ const ItemModal = ({ item, onClose, onAddToCart, onCheckout }) => {
             <h2 className="item-modal-title">{item.name}</h2>
             {item.sub && <p className="item-modal-subtitle">{item.sub}</p>}
 
-            <div className="item-modal-price-row">
-              <span className="item-modal-price">{formattedUnitPrice}</span>
-              {reviews.length > 0 && (
-                <div className="item-modal-rating-badge">
-                  <FiStar className="star-filled" />
-                  <span>{avgRating} ({reviews.length} {reviews.length === 1 ? 'review' : 'reviews'})</span>
-                </div>
-              )}
-            </div>
-
-            {/* Description */}
+            {/* Description (Right below item name & subtitle) */}
             <div className="item-modal-description-box">
               <p>{item.description || DEFAULT_DESCRIPTION}</p>
             </div>
@@ -207,25 +197,37 @@ const ItemModal = ({ item, onClose, onAddToCart, onCheckout }) => {
               </div>
             )}
 
-            {/* Quantity Selector */}
-            <div className="item-modal-quantity-wrapper">
-              <label className="qty-label">Quantity:</label>
-              <div className="modal-qty-control">
-                <button
-                  type="button"
-                  className="modal-qty-btn"
-                  onClick={() => handleQtyChange(-1)}
-                >
-                  <FiMinus />
-                </button>
-                <span className="modal-qty-value">{quantity}</span>
-                <button
-                  type="button"
-                  className="modal-qty-btn"
-                  onClick={() => handleQtyChange(1)}
-                >
-                  <FiPlus />
-                </button>
+            {/* Quantity Selector & Price Block */}
+            <div className="item-modal-qty-price-row">
+              <div className="item-modal-quantity-wrapper">
+                <label className="qty-label">Quantity:</label>
+                <div className="modal-qty-control">
+                  <button
+                    type="button"
+                    className="modal-qty-btn"
+                    onClick={() => handleQtyChange(-1)}
+                  >
+                    <FiMinus />
+                  </button>
+                  <span className="modal-qty-value">{quantity}</span>
+                  <button
+                    type="button"
+                    className="modal-qty-btn"
+                    onClick={() => handleQtyChange(1)}
+                  >
+                    <FiPlus />
+                  </button>
+                </div>
+              </div>
+
+              <div className="item-modal-price-box">
+                <span className="item-modal-price">{formattedUnitPrice}</span>
+                {reviews.length > 0 && (
+                  <div className="item-modal-rating-badge">
+                    <FiStar className="star-filled" />
+                    <span>{avgRating} ({reviews.length})</span>
+                  </div>
+                )}
               </div>
             </div>
 
