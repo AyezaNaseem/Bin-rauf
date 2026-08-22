@@ -19,7 +19,6 @@ const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem, onClearCart, onN
   const [paymentMethod, setPaymentMethod] = useState('cod');
   const [transactionId, setTransactionId] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSending, setIsSending] = useState(false);
   const [formData, setFormData] = useState({
     emailOrPhone: '',
     firstName: '',
@@ -48,32 +47,25 @@ const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem, onClearCart, onN
     0
   );
 
-  // Delivery Charges: Free for Oil & Serum items, else Rs. 300 PKR
   const deliveryCharges = hasOilSerum ? 0 : (subtotal > 0 ? 300 : 0);
-
-  // 10% Discount for shopping over Rs. 10,000
   const isDiscountEligible = subtotal >= 10000;
   const discountAmount = isDiscountEligible ? Math.round(subtotal * 0.10) : 0;
-
   const total = subtotal - discountAmount + deliveryCharges;
 
   const handleSubmitOrder = (e) => {
     e.preventDefault();
+
     if (cartItems.length === 0) {
       alert("Your cart is empty!");
       return;
     }
 
-    setIsSending(true);
-
-    // Prepare Items List String for Email
     const itemsSummary = cartItems
       .map((item) => `${item.name} x${item.quantity || 1} - ${formatPrice(parsePrice(item.price) * (item.quantity || 1))}`)
       .join('\n');
 
-    // EmailJS Template Dynamic Parameters
     const templateParams = {
-      to_email: 'binraufofficials@gmail.com', // Official Target Email
+      to_email: 'binraufofficials@gmail.com',
       user_name: `${formData.firstName} ${formData.lastName}`,
       user_phone: formData.phone,
       user_email: formData.emailOrPhone,
@@ -86,20 +78,17 @@ const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem, onClearCart, onN
       payment_method: paymentMethod.toUpperCase() + (transactionId ? ` (TID: ${transactionId})` : '')
     };
 
-    // Send Email via EmailJS
     emailjs.send(
-      'service_1jidq0e',      // Yahan apni new Service ID lagayein
-      'template_avrvgar',     // Yahan apni Template ID lagayein
+      'service_1jidq0e',
+      'template_avrvgar',
       templateParams,
-      'F2GRIU4Hdesj55YbI'       // Yahan apni Public Key lagayein
+      'F2GRIU4Hdesj55YbI'
     )
     .then(() => {
-      setIsSending(false);
       setIsSubmitted(true);
     })
     .catch((err) => {
       console.error('EmailJS Error:', err);
-      setIsSending(false);
       alert('Order place karne me masla aaya hai. Kripya dubara koshish karein.');
     });
   };
@@ -145,7 +134,6 @@ const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem, onClearCart, onN
   return (
     <div className="cart-page">
       <div className="cart-container">
-        {/* Header Title */}
         <div className="cart-header-title">
           <span className="cart-tagline">BIN RAUF</span>
           <h2>CART & CHECKOUT</h2>
@@ -166,7 +154,6 @@ const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem, onClearCart, onN
           </div>
         ) : (
           <div className="cart-checkout-grid">
-            {/* LEFT COLUMN: Order Summary */}
             <div className="order-summary-column">
               <h3 className="section-subtitle">Order Summary</h3>
 
@@ -219,7 +206,6 @@ const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem, onClearCart, onN
                 })}
               </div>
 
-              {/* Promos & Offer Banners */}
               <div className="cart-promos-container">
                 {hasOilSerum && (
                   <div className="promo-badge free-delivery-promo">
@@ -227,18 +213,19 @@ const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem, onClearCart, onN
                   </div>
                 )}
 
-                {isDiscountEligible ? (
+                {isDiscountEligible && (
                   <div className="promo-badge discount-promo">
                     🎉 <strong>10% Discount Applied!</strong> (Orders over Rs. 10,000)
                   </div>
-                ) : (
+                )}
+
+                {!isDiscountEligible && (
                   <div className="promo-badge hint-promo">
                     💡 Spend <strong>{formatPrice(10000 - subtotal)}</strong> more to unlock <strong>10% OFF</strong>!
                   </div>
                 )}
               </div>
 
-              {/* Pricing Breakdown */}
               <div className="pricing-breakdown">
                 <div className="pricing-row">
                   <span>Subtotal</span>
@@ -270,10 +257,8 @@ const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem, onClearCart, onN
               </div>
             </div>
 
-            {/* RIGHT COLUMN: Checkout & Payment */}
             <div className="checkout-form-column">
               <form onSubmit={handleSubmitOrder} className="checkout-form">
-                {/* Contact Section */}
                 <div className="form-section">
                   <h3 className="section-subtitle">Contact</h3>
                   <div className="input-group">
@@ -289,7 +274,6 @@ const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem, onClearCart, onN
                   </div>
                 </div>
 
-                {/* Shipping Address Section */}
                 <div className="form-section">
                   <h3 className="section-subtitle">Shipping Address</h3>
                   <div className="input-row">
@@ -372,7 +356,6 @@ const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem, onClearCart, onN
                   </div>
                 </div>
 
-                {/* Payment Method Section */}
                 <div className="form-section">
                   <h3 className="section-subtitle">Payment Method</h3>
                   <div className="payment-options">
@@ -421,7 +404,6 @@ const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem, onClearCart, onN
                     </label>
                   </div>
 
-                  {/* Online Payment Info Box */}
                   {paymentMethod !== 'cod' && (
                     <div className="payment-instructions-box">
                       {paymentMethod === 'jazzcash' && (
@@ -462,9 +444,11 @@ const Cart = ({ cartItems = [], onUpdateQuantity, onRemoveItem, onClearCart, onN
                   )}
                 </div>
 
-                {/* Submit Button */}
-                <button type="submit" className="btn-complete-order" disabled={isSending}>
-                  {isSending ? 'PROCESSING ORDER...' : `COMPLETE ORDER (${formatPrice(total)})`}
+                <button
+                  type="submit"
+                  className="btn-complete-order"
+                >
+                  COMPLETE ORDER ({formatPrice(total)})
                 </button>
 
                 <p className="secure-checkout-tag">

@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { FaWhatsapp } from 'react-icons/fa';
 import emailjs from '@emailjs/browser';
 import './contactus.css';
 import Footer from './footer';
@@ -49,17 +50,28 @@ const ContactUs = () => {
     });
   };
 
+  const whatsappUrl = "https://wa.me/923119963224?text=Assalam%20o%20Alaikum%2C%20I%20have%20an%20inquiry%20regarding%20Bin%20Rauf%20products.";
+
   return (
     <div className="contact-page">
       <div className="contact-container">
-        {/* 1. TOP HEADER BLOCK (TITLE & DESCRIPTION) */}
+        {/* 1. TOP HEADER BLOCK (TITLE & DESCRIPTION & WHATSAPP QUICK BUTTON) */}
         <div className="contact-header-block">
           <h1 className="contact-title">
             Connect With Heritage
           </h1>
           <p className="contact-subtitle">
-            We invite you to experience the craftsmanship and elegance of BIN RAUF. For inquiries, bespoke commissions, or to schedule a private viewing, please leave your details below.
+            We invite you to experience the craftsmanship and elegance of BIN RAUF. For instant assistance, bespoke inquiries, or direct orders, click below to chat with us directly on WhatsApp.
           </p>
+
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="contact-whatsapp-header-btn"
+          >
+            <FaWhatsapp className="header-wa-icon" /> CHAT ON WHATSAPP (+92 311 9963224)
+          </a>
         </div>
 
         <div className="contact-grid">
@@ -88,7 +100,32 @@ const ContactUs = () => {
                   </svg>
                   <p><a href="tel:03119963224">+92 3119963224</a></p>
                 </div>
+
+                {/* DIRECT WHATSAPP ITEM */}
+                <div className="info-item whatsapp-info-item">
+                  <FaWhatsapp className="info-icon whatsapp-green-icon" />
+                  <p>
+                    <a
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="whatsapp-link-highlight"
+                    >
+                      Direct WhatsApp Chat (+92 311 9963224)
+                    </a>
+                  </p>
+                </div>
               </div>
+
+              {/* DIRECT WHATSAPP ACTION BUTTON */}
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-card-whatsapp"
+              >
+                <FaWhatsapp className="card-wa-icon" /> INSTANT WHATSAPP CHAT
+              </a>
 
               {/* MAP PREVIEW CONTAINER */}
               <div className="map-container">
@@ -96,7 +133,7 @@ const ContactUs = () => {
                   title="Bin Rauf Location"
                   src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d13619.427049376227!2d73.04727194550833!3d31.41807229994075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sJhung%20Road%20near%20Sheikh%20Colony%20graveyard%20%20ABC%20road%2C%20Faisalabad!5e0!3m2!1sen!2s!4v1787049803504!5m2!1sen!2s"
                   width="100%"
-                  height="220"
+                  height="200"
                   style={{ border: 0, borderRadius: '4px' }}
                   allowFullScreen
                   loading="lazy"
