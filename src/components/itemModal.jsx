@@ -17,6 +17,32 @@ const CAP_SIZES = [
   '59 / 23.5'
 ];
 
+// Exact 6ML Prices Mapping for all 22 Attars
+const ATTAR_6ML_PRICES = {
+  'attar-1': 1900,  // Hacivet
+  'attar-2': 1050,  // Office For Men
+  'attar-3': 1050,  // Janan Sports
+  'attar-4': 950,   // Baccarat 540
+  'attar-5': 1900,  // Oud Ul Arab
+  'attar-6': 900,   // Legend
+  'attar-7': 1050,  // Romantic Coffee
+  'attar-8': 950,   // White Oud
+  'attar-9': 1400,  // Stronger Amber
+  'attar-10': 1050, // Blue Oud
+  'attar-11': 1050, // Mushk Mataf
+  'attar-12': 700,  // Husn E Yousaf
+  'attar-13': 700,  // Blue Sea
+  'attar-14': 700,  // Dirham
+  'attar-15': 700,  // Sabaya
+  'attar-16': 700,  // Dunhill
+  'attar-17': 850,  // Desire Dunhill
+  'attar-18': 1400, // Silk Musk
+  'attar-19': 950,  // Ameer Ul Oud
+  'attar-20': 950,  // Gucci Flora
+  'attar-21': 950,  // White Musk
+  'attar-22': 1250  // Super Sultan
+};
+
 const RulerIcon = () => (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '4px' }}>
     <path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.4 2.4 0 0 1 0-3.4l2.6-2.6a2.4 2.4 0 0 1 3.4 0l12.6 12.6z"></path>
@@ -48,10 +74,46 @@ const isCapProduct = (item) => {
   return false;
 };
 
+const getAttarPrice = (item, size, includeGiftBox) => {
+  let basePrice = parsePriceNum(item.price);
+  if (size === '6ML') {
+    if (item.id && ATTAR_6ML_PRICES[item.id]) {
+      basePrice = ATTAR_6ML_PRICES[item.id];
+    } else {
+      const nameLower = (item.name || '').toLowerCase();
+      if (nameLower.includes('hacivet')) basePrice = 1900;
+      else if (nameLower.includes('office')) basePrice = 1050;
+      else if (nameLower.includes('janan')) basePrice = 1050;
+      else if (nameLower.includes('baccarat') || nameLower.includes('bacarat')) basePrice = 950;
+      else if (nameLower.includes('arab')) basePrice = 1900;
+      else if (nameLower.includes('legend')) basePrice = 900;
+      else if (nameLower.includes('coffee') || nameLower.includes('romantic')) basePrice = 1050;
+      else if (nameLower.includes('white oud')) basePrice = 950;
+      else if (nameLower.includes('stronger')) basePrice = 1400;
+      else if (nameLower.includes('blue oud')) basePrice = 1050;
+      else if (nameLower.includes('mataf') || nameLower.includes('mushk')) basePrice = 1050;
+      else if (nameLower.includes('yousaf') || nameLower.includes('husn')) basePrice = 700;
+      else if (nameLower.includes('blue sea')) basePrice = 700;
+      else if (nameLower.includes('dirham') || nameLower.includes('dirhum')) basePrice = 700;
+      else if (nameLower.includes('sabaya')) basePrice = 700;
+      else if (nameLower.includes('desire')) basePrice = 850;
+      else if (nameLower.includes('dunhill')) basePrice = 700;
+      else if (nameLower.includes('silk')) basePrice = 1400;
+      else if (nameLower.includes('ameer')) basePrice = 950;
+      else if (nameLower.includes('flora') || nameLower.includes('gucci')) basePrice = 950;
+      else if (nameLower.includes('white musk')) basePrice = 950;
+      else if (nameLower.includes('sultan')) basePrice = 1250;
+    }
+  }
+  const giftBoxPrice = includeGiftBox ? 250 : 0;
+  return basePrice + giftBoxPrice;
+};
+
 const ItemModal = ({ item, onClose, onAddToCart, onCheckout }) => {
   const [quantity, setQuantity] = useState(1);
   const [includeGiftBox, setIncludeGiftBox] = useState(false);
   const [showGiftBoxLightbox, setShowGiftBoxLightbox] = useState(false);
+  const [selectedAttarSize, setSelectedAttarSize] = useState('12ML');
   const [selectedCapSize, setSelectedCapSize] = useState('53 / 20.5');
   const [showSizeChartLightbox, setShowSizeChartLightbox] = useState(false);
   const [reviews, setReviews] = useState([]);
@@ -72,6 +134,7 @@ const ItemModal = ({ item, onClose, onAddToCart, onCheckout }) => {
     setIncludeGiftBox(false);
     setShowGiftBoxLightbox(false);
     setShowSizeChartLightbox(false);
+    setSelectedAttarSize('12ML');
     setSelectedCapSize('53 / 20.5');
     setFeedbackSubmitted(false);
 
@@ -92,9 +155,10 @@ const ItemModal = ({ item, onClose, onAddToCart, onCheckout }) => {
 
   if (!item) return null;
 
-  const baseUnitPrice = parsePriceNum(item.price);
-  const giftBoxPrice = 250;
-  const currentUnitPrice = baseUnitPrice + (isAttar && includeGiftBox ? giftBoxPrice : 0);
+  const currentUnitPrice = isAttar 
+    ? getAttarPrice(item, selectedAttarSize, includeGiftBox)
+    : parsePriceNum(item.price);
+    
   const formattedUnitPrice = `Rs. ${currentUnitPrice.toLocaleString()} PKR`;
 
   const handleQtyChange = (delta) => {
@@ -103,14 +167,17 @@ const ItemModal = ({ item, onClose, onAddToCart, onCheckout }) => {
 
   const prepareSubmitItem = () => {
     let newItem = { ...item };
-    if (isAttar && includeGiftBox) {
+    if (isAttar) {
+      const finalPriceNum = getAttarPrice(item, selectedAttarSize, includeGiftBox);
+      const cleanSizeId = selectedAttarSize.toLowerCase();
       newItem = {
         ...newItem,
-        id: `${newItem.id || newItem.name}-giftbox`,
-        name: `${newItem.name} (+ Gift Box)`,
-        sub: `${newItem.sub ? newItem.sub + ' • ' : ''}Includes Signature Gift Box`,
-        price: formattedUnitPrice,
-        includeGiftBox: true
+        id: `${newItem.id || newItem.name}-${cleanSizeId}${includeGiftBox ? '-giftbox' : ''}`,
+        name: `${newItem.name} (${selectedAttarSize}${includeGiftBox ? ' + Gift Box' : ''})`,
+        sub: `Size: ${selectedAttarSize}${includeGiftBox ? ' • Includes Luxury Gift Box' : ''}`,
+        price: `Rs. ${finalPriceNum.toLocaleString()} PKR`,
+        selectedSize: selectedAttarSize,
+        includeGiftBox: includeGiftBox
       };
     }
     if (isCap) {
@@ -195,6 +262,34 @@ const ItemModal = ({ item, onClose, onAddToCart, onCheckout }) => {
             <div className="item-modal-description-box">
               <p>{item.description || DEFAULT_DESCRIPTION}</p>
             </div>
+
+            {/* ATTAR PACKAGING SIZE SELECTION - ONLY DISPLAYED FOR ATTARS */}
+            {isAttar && (
+              <div className="item-modal-attar-size-wrapper">
+                <label className="attar-size-header-label">
+                  PACKAGING SIZE: <strong>{selectedAttarSize}</strong>
+                </label>
+                <div className="attar-size-options">
+                  <button
+                    type="button"
+                    className={`attar-size-option-btn ${selectedAttarSize === '6ML' ? 'active' : ''}`}
+                    onClick={() => setSelectedAttarSize('6ML')}
+                  >
+                    <span className="attar-size-title">6 ML</span>
+                    <span className="attar-size-price">Rs. {getAttarPrice(item, '6ML', false).toLocaleString()}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    className={`attar-size-option-btn ${selectedAttarSize === '12ML' ? 'active' : ''}`}
+                    onClick={() => setSelectedAttarSize('12ML')}
+                  >
+                    <span className="attar-size-title">12 ML</span>
+                    <span className="attar-size-price">Rs. {getAttarPrice(item, '12ML', false).toLocaleString()}</span>
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* CAP SIZE SELECTION - ONLY DISPLAYED FOR NAMAZ CAPS */}
             {isCap && (

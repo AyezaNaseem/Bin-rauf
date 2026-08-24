@@ -175,6 +175,28 @@
     letter-spacing: 0.8px;
   }
 
+  .item-modal-attar-size-wrapper {
+    padding: 10px 10px;
+    margin-bottom: 12px;
+  }
+
+  .attar-size-header-label {
+    font-size: 0.76rem;
+    margin-bottom: 8px;
+  }
+
+  .attar-size-option-btn {
+    padding: 8px 10px;
+  }
+
+  .attar-size-title {
+    font-size: 0.85rem;
+  }
+
+  .attar-size-price {
+    font-size: 0.76rem;
+  }
+
   .item-modal-cap-size-wrapper {
     padding: 10px 10px;
     margin-bottom: 12px;
@@ -262,15 +284,82 @@
   margin: 0 0 14px 0;
 }
 
-.item-modal-description-box {
-  background: #f7f3ed;
-  padding: 12px 16px;
+/* ATTAR PACKAGING SIZE SELECTOR STYLING */
+.item-modal-attar-size-wrapper {
+  margin-bottom: 18px;
+  background: #fdfaf6;
+  border: 1.5px solid #e8e2d8;
   border-radius: 8px;
-  border-left: 3px solid #8b7355;
-  font-size: 0.88rem;
-  color: #444;
-  line-height: 1.5;
-  margin-bottom: 16px;
+  padding: 12px 14px;
+}
+
+.attar-size-header-label {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.82rem;
+  color: #333333;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.attar-size-header-label strong {
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.attar-size-options {
+  display: flex;
+  gap: 10px;
+}
+
+.attar-size-option-btn {
+  flex: 1;
+  background: #ffffff;
+  border: 1.5px solid #dcd4c8;
+  padding: 10px 14px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.attar-size-option-btn:hover {
+  border-color: #8c7355;
+  background: #faf4eb;
+}
+
+.attar-size-option-btn.active {
+  background: #241c18;
+  border-color: #241c18;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.attar-size-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: 1px;
+}
+
+.attar-size-option-btn.active .attar-size-title {
+  color: #ffffff;
+}
+
+.attar-size-price {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #8c7355;
+}
+
+.attar-size-option-btn.active .attar-size-price {
+  color: #dfd5c6;
 }
 
 /* CAP SIZE SELECTOR STYLING */
@@ -734,16 +823,18 @@
 
 /* Customer Feedback Section */
 .item-modal-feedback-section {
-  border-top: 1px solid #e2dad0;
-  padding-top: 18px;
-
+  border-top: 1px dashed #dcd4c8;
+  padding-top: 20px;
+  margin-top: 10px;
 }
 
 .feedback-section-title {
-  font-size: 1rem;
-  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
   color: #1a1a1a;
-  margin: 0 0 12px 0;
+  margin: 0 0 14px 0;
+  letter-spacing: 0.5px;
 }
 
 .reviews-list {
@@ -751,16 +842,16 @@
   flex-direction: column;
   gap: 10px;
   margin-bottom: 18px;
-
-  max-height: 180px;
+  max-height: 200px;
   overflow-y: auto;
 }
 
 .review-card {
-  background: #f7f3ed;
-  padding: 10px 12px;
+  background: #ffffff;
+  border: 1px solid #e8e2d8;
+  padding: 12px 14px;
   border-radius: 6px;
-  font-size: 0.84rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
 }
 
 .review-header {
@@ -771,50 +862,59 @@
 }
 
 .review-author {
-  color: #222;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1a1a1a;
 }
 
 .review-date {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: #888;
 }
 
 .review-stars {
   display: flex;
-  gap: 2px;
+  gap: 3px;
   font-size: 0.8rem;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .review-comment {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.82rem;
+  color: #555555;
+  line-height: 1.4;
   margin: 0;
-  color: #555;
-  line-height: 1.35;
 }
 
+/* WRITE FEEDBACK FORM */
 .feedback-form {
-  background: #ffffff;
-  border: 1px solid #e2dad0;
-  padding: 14px;
+  background: #fdfaf6;
+  border: 1.5px solid #e8e2d8;
+  padding: 18px;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
 }
 
 .feedback-form-title {
-  font-size: 0.85rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
   font-weight: 700;
-  color: #333;
+  color: #8c7355;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1.5px;
 }
 
 .feedback-success-msg {
   background: #e8f5e9;
   color: #2e7d32;
   font-size: 0.82rem;
-  padding: 6px 10px;
+  font-weight: 600;
+  padding: 8px 12px;
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -824,55 +924,81 @@
 .form-rating-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  font-family: 'Montserrat', sans-serif;
   font-size: 0.82rem;
-  color: #555;
+  color: #444;
+  font-weight: 600;
 }
 
 .rating-select-stars {
   display: flex;
-  gap: 2px;
+  gap: 4px;
 }
 
 .star-btn {
   background: none;
   border: none;
-  padding: 0;
+  padding: 2px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
 }
 
-.form-input-group input,
-.form-input-group textarea {
+.star-btn:hover {
+  transform: scale(1.15);
+}
+
+.feedback-input,
+.feedback-textarea {
   width: 100%;
-  padding: 8px 10px;
-  font-size: 0.83rem;
+  padding: 10px 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  color: #1a1a1a;
+  background-color: #ffffff;
   border: 1px solid #dcd4c8;
-  border-radius: 4px;
-  box-sizing: border-box;
-  font-family: inherit;
+  border-radius: 6px;
   outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.form-input-group input:focus,
-.form-input-group textarea:focus {
-  border-color: #8b7355;
+.feedback-input:focus,
+.feedback-textarea:focus {
+  border-color: #8c7355;
+  box-shadow: 0 0 0 3px rgba(140, 115, 85, 0.12);
 }
 
-.btn-submit-feedback {
+.feedback-input::placeholder,
+.feedback-textarea::placeholder {
+  color: #aaaaaa;
+  font-weight: 300;
+  font-size: 0.8rem;
+}
+
+.btn-submit-review {
   align-self: flex-start;
-  background-color: #8b7355;
-  color: #fff;
+  background-color: #241c18;
+  color: #ffffff;
   border: none;
-  padding: 8px 14px;
+  padding: 11px 22px;
+  font-family: 'Montserrat', sans-serif;
   font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
   border-radius: 4px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.btn-submit-feedback:hover {
-  background-color: #1a1a1a;
+.btn-submit-review:hover {
+  background-color: #3b3028;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
