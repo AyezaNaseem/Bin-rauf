@@ -1,0 +1,47 @@
+[
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string",
+        "title": "Product Title"
+      },
+      {
+        "name": "price",
+        "type": "number",
+        "title": "Price (PKR)"
+      },
+      {
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image",
+        "title": "Product Image"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Perfumes",
+              "value": "perfumes"
+            },
+            {
+              "title": "Attars",
+              "value": "attars"
+            }
+          ]
+        },
+        "name": "category",
+        "type": "string"
+      }
+    ],
+    "name": "product",
+    "type": "document",
+    "title": "Products"
+  }
+]
